@@ -1,0 +1,39 @@
+
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus
+    ports:
+      - "9090:9090"
+
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+
+  snmp_exporter:
+    image: prom/snmp-exporter
+    container_name: snmp_exporter
+    volumes:
+      - ./prometheus/snmp.yml:/etc/snmp_exporter/snmp.yml
+    ports:
+      - "9116:9116"
+
+  blackbox_exporter:
+    image: prom/blackbox-exporter
+    container_name: blackbox_exporter
+    ports:
+      - "9115:9115"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
