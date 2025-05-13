@@ -1,0 +1,1 @@
+Alerting configuration notes for Grafana.
